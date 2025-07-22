@@ -1,0 +1,163 @@
+/* --- "Clean Medical" Theme --- */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: #f5f8fa; /* Light blue-grey background */
+}
+
+.chat {
+    margin: auto;
+}
+
+.card {
+    height: 650px;
+    border-radius: 15px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(0, 80, 179, 0.1);
+    border: none;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    background-color: #007bff;
+    border-bottom: 0 !important;
+    padding: 1rem 1.5rem;
+    color: white;
+}
+
+/* --- Simplified Initial-Based Icons --- */
+.icon-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: white;
+    border-radius: 50%;
+}
+.header-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.msg-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+}
+.bot-icon { background-color: #007bff; }
+.user-icon { background-color: #6c757d; }
+
+.user_info span {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.user_info p {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.msg_card_body {
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+/* --- Message Bubbles --- */
+.msg_cotainer, .msg_cotainer_send {
+    padding: 12px 18px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    position: relative;
+    animation: messageFadeIn 0.3s ease-in-out;
+}
+
+.msg_cotainer { /* Bot message style */
+    background-color: #e9ecef;
+    color: #343a40;
+}
+
+.msg_cotainer_send { /* User message style */
+    background-color: #007bff;
+    color: white;
+}
+
+.msg_time, .msg_time_send {
+    position: absolute;
+    bottom: -20px;
+    font-size: 10px;
+    color: #888;
+}
+
+.msg_time { left: 5px; }
+.msg_time_send { right: 5px; }
+
+/* --- Card Footer --- */
+.card-footer {
+    border-radius: 0 0 15px 15px !important;
+    border-top: 1px solid #e9ecef !important;
+    background-color: #fff;
+    padding: 1rem;
+}
+
+.type_msg {
+    background-color: #f1f3f5 !important;
+    border: 1px solid #e0e6ed !important;
+    color: #343a40 !important;
+    height: 50px !important;
+    border-radius: 25px !important;
+    padding: 10px 20px;
+    transition: border-color 0.2s ease;
+}
+
+.type_msg:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+    border-color: #007bff !important;
+}
+
+.send_btn {
+    border-radius: 50% !important;
+    background: #007bff !important;
+    border: 0 !important;
+    color: white !important;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+.send_btn:hover {
+    transform: scale(1.1);
+}
+
+/* --- Typing Indicator Animation --- */
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #adb5bd;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+.typing-dot:nth-child(2) { animation-delay: -0.2s; }
+.typing-dot:nth-child(3) { animation-delay: -0.4s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+
+@keyframes messageFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Scrollbar --- */
+.msg_card_body::-webkit-scrollbar { width: 6px; }
+.msg_card_body::-webkit-scrollbar-track { background: transparent; }
+.msg_card_body::-webkit-scrollbar-thumb { background: #ced4da; border-radius: 3px; }
+.msg_card_body::-webkit-scrollbar-thumb:hover { background: #adb5bd; }

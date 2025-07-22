@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-md-8 col-xl-6 chat">
+                <div class="card">
+                    <div class="card-header msg_head">
+                        <div class="d-flex bd-highlight">
+                            <div class="icon-circle header-icon">B</div>
+                            <div class="user_info ml-3">
+                                <span>Health Bot</span>
+                                <p>AI Medical Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="messageFormeight" class="card-body msg_card_body">
+                        <div class="d-flex justify-content-start mb-4">
+                            <div class="icon-circle msg-icon bot-icon mr-2">B</div>
+                            <div class="msg_cotainer">
+                                Hello! Ask me any medical question.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <form id="messageArea" class="input-group">
+                            <input type="text" id="text" name="msg" placeholder="Type your question..." autocomplete="off" class="form-control type_msg" required/>
+                            <div class="input-group-append">
+                                <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            const msg_card_body = $('.msg_card_body');
+
+            function scrollToBottom() {
+                msg_card_body.scrollTop(msg_card_body[0].scrollHeight);
+            }
+
+            $("#messageArea").on("submit", function(event) {
+                event.preventDefault(); 
+                
+                const date = new Date();
+                const hour = date.getHours();
+                const minute = date.getMinutes().toString().padStart(2, '0');
+                const str_time = hour + ":" + minute;
+                const rawText = $("#text").val();
+
+                if (rawText.trim() === '') { return; }
+
+                // 1. Display User's Message
+                const userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">' + str_time + '</span></div><div class="icon-circle msg-icon user-icon ml-2">U</div></div>';
+                $("#text").val("");
+                $("#messageFormeight").append(userHtml);
+                scrollToBottom();
+
+                // 2. Display Typing Indicator
+                const typingIndicatorHtml = '<div id="typing_indicator" class="d-flex justify-content-start mb-4"><div class="icon-circle msg-icon bot-icon mr-2">B</div><div class="msg_cotainer"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+                $("#messageFormeight").append(typingIndicatorHtml);
+                scrollToBottom();
+                
+                // 3. Send message to Flask backend
+                $.ajax({
+                    data: { msg: rawText },
+                    type: "POST",
+                    url: "/get",
+                }).done(function(data) {
+                    // 4. Remove Typing Indicator
+                    $("#typing_indicator").remove();
+
+                    // 5. Display Bot's Actual Response
+                    const botHtml = '<div class="d-flex justify-content-start mb-4"><div class="icon-circle msg-icon bot-icon mr-2">B</div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + '</span></div></div>';
+                    $("#messageFormeight").append(botHtml);
+                    scrollToBottom();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
