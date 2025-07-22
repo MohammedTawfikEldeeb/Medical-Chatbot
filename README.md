@@ -19,7 +19,7 @@ conda activate medical-bot
 ```
 
 
-### STEP 02- install the requirements
+### STEP 2 : install the requirements
 ```bash
 pip install -r requirements.txt
 ```
@@ -91,7 +91,7 @@ open up localhost:
 
 	
 ## 3. Create ECR repo to store/save docker image
-    - Save the URI: 751140963644.dkr.ecr.eu-north-1.amazonaws.com/medicalbot
+    - Save the URI: 751140963644.dkr.ecr.us-east-1.amazonaws.com/medicalbot
 
 	
 ## 4. Create EC2 machine (Ubuntu) 
